@@ -58,7 +58,7 @@ func run(commands []Command) map[Pair]bool {
             for j := 1; j < 10; j++ {
                 if cord[j-1].x == cord[j].x { // same row
                     distance := cord[j-1].y - cord[j].y
-                    if distance <= 1 && distance >= -1 { continue }
+                    if distance <= 1 && distance >= -1 { break }
                     if distance < 0 {
                         cord[j].y--
                     } else {
@@ -66,14 +66,14 @@ func run(commands []Command) map[Pair]bool {
                     }
                 } else if cord[j-1].y == cord[j].y { // same column
                     distance := cord[j-1].x - cord[j].x
-                    if distance <= 1 && distance >= -1 { continue }
+                    if distance <= 1 && distance >= -1 { break }
                     if distance < 0 {
                         cord[j].x--
                     } else {
                         cord[j].x++
                     }
                 } else {
-                    if (cord[j-1].x == cord[j].x+1 && cord[j-1].y == cord[j].y+1) || (cord[j-1].x == cord[j].x-1 && cord[j-1].y == cord[j].y-1) || (cord[j-1].x == cord[j].x+1 && cord[j-1].y == cord[j].y-1) || (cord[j-1].x == cord[j].x-1 && cord[j-1].y == cord[j].y+1) { continue }
+                    if (cord[j-1].x == cord[j].x+1 && cord[j-1].y == cord[j].y+1) || (cord[j-1].x == cord[j].x-1 && cord[j-1].y == cord[j].y-1) || (cord[j-1].x == cord[j].x+1 && cord[j-1].y == cord[j].y-1) || (cord[j-1].x == cord[j].x-1 && cord[j-1].y == cord[j].y+1) { break }
                     if (cord[j-1].x == cord[j].x+1 && cord[j-1].y == cord[j].y+2) || (cord[j-1].x == cord[j].x+2 && cord[j-1].y == cord[j].y+1) || (cord[j-1].x == cord[j].x+2 && cord[j-1].y == cord[j].y+2){
                         cord[j].x++
                         cord[j].y++
