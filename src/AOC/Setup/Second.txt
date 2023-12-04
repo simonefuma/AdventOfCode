@@ -1,0 +1,18 @@
+package year{year}.day{day};
+
+import AOC.AOCDay;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+public class Second extends AOCDay {
+
+    private static int getResult(List<String> lines) {
+            return 0;
+    }
+
+    public static void execute() throws FileNotFoundException {
+        System.out.println("Second Puzzle Result: " + getResult(getInputToList("{year}", "{day}")));
+    }
+
+}
