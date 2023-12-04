@@ -50,6 +50,7 @@ public class Setup {
         inputDirectory.mkdir();
         File inputFile = new File(inputDirectory, "input.txt");
         inputFile.createNewFile();
+        gitAdd(inputFile);
     }
 
     private static void createFile(String fileName, String year, String day) throws IOException {
@@ -62,6 +63,12 @@ public class Setup {
         FileWriter writer = new FileWriter(file);
         writer.write(sj.toString().replaceAll("\\{year}", year).replaceAll("\\{day}", day));
         writer.close();
+        gitAdd(file);
+    }
+
+    private static void gitAdd(File file) throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder("git", "add", file.getAbsolutePath());
+        processBuilder.start();
     }
 
 }
