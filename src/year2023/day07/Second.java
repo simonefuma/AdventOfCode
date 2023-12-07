@@ -51,19 +51,18 @@ public class Second extends AOCDay {
         return 0;
     }
 
-    private static String replaceJoker(String hand) {
-        if(!hand.contains("J")) return hand;
+    private static String replaceJoker(String handWithJoker) {
+        if(!handWithJoker.contains("J")) return handWithJoker;
         int point = 0;
-        String newHand = "";
+        String hand = "";
         for(Character card : cards) {
-            String tempHand = replaceJoker(hand.replaceFirst("J", String.valueOf(card)));
-            int newPoint = getType(tempHand);
+            int newPoint = getType(handWithJoker.replaceAll("J", String.valueOf(card)));
             if(newPoint > point) {
                 point = newPoint;
-                newHand = tempHand;
+                hand = handWithJoker.replaceAll("J", String.valueOf(card));
             }
         }
-        return newHand;
+        return hand;
     }
 
     private static int compareHand(String first, String second) {
