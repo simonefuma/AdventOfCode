@@ -24,23 +24,32 @@ public class Second extends AOCDay {
         return startNodes;
     }
 
-    private static HashMap<String, List<Integer>> initializePositionPatternMap(List<String> positions) {
-        HashMap<String, List<Integer>> positionPattern = new HashMap<>(positions.size());
-        for(String position : positions) positionPattern.put(position, new ArrayList<>());
-        return positionPattern;
+    private static long mcd(long a, long b) {
+        while (b != 0) {
+            long temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 
-    private static int mcm(int... numbers) {
-        int mcm = Arrays.stream(numbers).max().getAsInt();
-        while(Arrays.stream(numbers).allMatch((number) -> mcm % number == 0)) mcm++;
+    private static long mcm(long a, long b) {
+        return a * (b / mcd(a, b));
+    }
+
+    private static long mcm(HashMap<String, Integer> numbers) {
+        long mcm = 1;
+        for(String position : numbers.keySet()) {
+            mcm = mcm(mcm, numbers.get(position));
+        }
         return mcm;
     }
 
-    private static int getResult(List<String> lines) {
+    private static long getResult(List<String> lines) {
         String instructions = lines.get(0);
         HashMap<String, String[]> nodes = getNodes(lines.subList(2, lines.size()));
         List<String> positions = getPositions(nodes.keySet());
-        HashMap<String, List<Integer>> positionsPattern = initializePositionPatternMap(positions);
+        HashMap<String, Integer> positionsPattern = new HashMap<>(positions.size());
 
         for(String position : positions) {
             String stepPosition = position;
@@ -51,15 +60,12 @@ public class Second extends AOCDay {
                     if(startPositions.contains(stepPosition)) break;
                     startPositions.add(stepPosition);
                 }
-                if(stepPosition.charAt(2) == 'Z') positionsPattern.get(position).add(step);
+                if(stepPosition.charAt(2) == 'Z') positionsPattern.put(position, step);
                 stepPosition = nodes.get(stepPosition)[(instructions.charAt(step % instructions.length()) == 'L') ? 0 : 1];
                 step++;
             }
-            System.out.println(positionsPattern.get(position));
         }
-
-
-        return 0;
+        return mcm(positionsPattern);
     }
 
     public static void execute() throws FileNotFoundException {
